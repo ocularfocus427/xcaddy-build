@@ -9,23 +9,22 @@ jobs:
 
     runs-on: ubuntu-latest
         
-        steps:
-            
-            name: Checkout
-            uses: actions/checkout@v4
+        steps:            
+          name: Checkout
+          uses: actions/checkout@v4
 
-            name: Login to GitHub Container Registry
-            run: echo $password | docker login $registry -u $username --password-stdin
-            env:
-                registry: ghcr.io
-                username: ${{ github.actor }}
-                password: ${{ secrets.GHCR_PAT }}
+          name: Login to GitHub Container Registry
+          run: echo $password | docker login $registry -u $username --password-stdin
+          env:
+              registry: ghcr.io
+              username: ${{ github.actor }}
+              password: ${{ secrets.GHCR_PAT }}
 
-            name: Build the hello-world Docker image
-            run: |
-                docker build . --tag $registry/$image:$(date +%s)
-                docker run $registry/$image:$(date +%s)
-                docker push $registry/$image:$(date +%s)  
-            env:
-                registry: ghcr.io
-                image: ${{ github.repository }}
+          name: Build the hello-world Docker image
+          run: |
+              docker build . --tag $registry/$image:$(date +%s)
+              docker run $registry/$image:$(date +%s)
+              docker push $registry/$image:$(date +%s)  
+          env:
+              registry: ghcr.io
+              image: ${{ github.repository }}
