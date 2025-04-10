@@ -22,10 +22,11 @@ jobs:
 
     -   name: Build the caddy Docker image
         run: |
-          docker build . --tag $registry/$image:$(date +%s)
-          docker run $registry/$image:$(date +%s)
-          docker push $registry/$image:$(date +%s)  
+          docker build . --tag $registry/$image:$jobname
+          docker run $registry/$image:$jobname
+          docker push $registry/$image:$jobname  
         env:
             registry: ghcr.io
             image: ${{ github.repository }}
+            jobname: ${{ github.job }}
     
