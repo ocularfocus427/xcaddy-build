@@ -10,17 +10,17 @@ jobs:
     runs-on: ubuntu-latest
         
     steps:
-      name: Checkout
+      -  name: Checkout
       uses: actions/checkout@v4
 
-      name: Login to GitHub Container Registry
+      -  name: Login to GitHub Container Registry
       run: echo $password | docker login $registry -u $username --password-stdin
       env:
         registry: ghcr.io
         username: ${{ github.actor }}
         password: ${{ secrets.GHCR_PAT }}
 
-      name: Build the caddy Docker image
+      -  name: Build the caddy Docker image
       run: |
           docker build . --tag $registry/$image:$(date +%s)
           docker run $registry/$image:$(date +%s)
